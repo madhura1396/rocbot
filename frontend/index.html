@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RocBot - Your Rochester Concierge</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🌸</span>
+                <span class="logo-text">RocBot</span>
+            </div>
+            <div class="tagline">Your Flower City Concierge</div>
+        </div>
+    </header>
+
+    <!-- Main Chat Container -->
+    <main class="chat-container">
+        <!-- Welcome Message -->
+        <div class="welcome-message" id="welcomeMessage">
+            <div class="welcome-icon">👋</div>
+            <h1>Hey! I'm RocBot</h1>
+            <p>Your friendly guide to everything happening in Rochester, NY. Ask me about events, city services, tech meetups, and more!</p>
+        </div>
+
+        <!-- Chat Feed -->
+        <div class="chat-feed" id="chatFeed">
+            <!-- Messages will be added here dynamically -->
+        </div>
+
+        <!-- Typing Indicator (hidden by default) -->
+        <div class="typing-indicator" id="typingIndicator" style="display: none;">
+            <div class="bot-message typing">
+                <div class="bubble-typing">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Input Area -->
+    <div class="input-container">
+        <!-- Suggestion Chips -->
+        <div class="suggestions" id="suggestions">
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">What's happening this weekend?</button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">Show me tech meetups</button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">Who is the mayor?</button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">How do I contact the city?</button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">Tell me about Rochester parks</button>
+        </div>
+
+        <!-- Quick Actions Menu -->
+        <div class="quick-actions" id="quickActions" style="display: none;">
+            <button class="action-btn" onclick="sendMessage('Show me upcoming events')">📅 Show Events</button>
+            <button class="action-btn" onclick="sendMessage('What tech meetups are in Rochester?')">💻 Tech Meetups</button>
+            <button class="action-btn" onclick="sendMessage('How do I contact the city?')">📞 Contact City</button>
+            <button class="action-btn" onclick="sendMessage('Tell me about Rochester parks')">🌳 Parks & Rec</button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="input-box">
+            <button class="menu-btn" onclick="toggleQuickActions()" title="Quick Actions">
+                <span class="menu-icon">+</span>
+            </button>
+            <input 
+                type="text" 
+                id="userInput" 
+                placeholder="Ask me about Rochester..." 
+                onkeypress="handleKeyPress(event)"
+            >
+            <button class="send-btn" onclick="handleSend()" title="Send message">
+                <span class="send-icon">✈️</span>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            RocBot Alpha - Helping you explore Rochester 🌸
+        </div>
+    </div>
+
+    <script src="static/js/chat.js"></script>
+</body>
+</html>
