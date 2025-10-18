@@ -16,7 +16,8 @@ EXPOSE 8000
 # Define environment variables (optional, but good for defaults)
 ENV API_HOST=0.0.0.0
 ENV API_PORT=8000
-ENV OLLAMA_HOST=http://localhost:11434 # Ollama usually runs on host, not in container
+# Ollama usually runs on host, not in container
+ENV O-LLAMA_HOST=http://localhost:11434
 ENV OLLAMA_MODEL=llama3.2:latest
 
 # Run app.py when the container launches
