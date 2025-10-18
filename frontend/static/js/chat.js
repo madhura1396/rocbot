@@ -1,6 +1,6 @@
 // RocBot Chat Interface - JavaScript
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https:rocbot-production.up.railway.app'; // Paste your new public URL here
 
 // State
 let isWaitingForResponse = false;
