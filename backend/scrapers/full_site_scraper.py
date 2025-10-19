@@ -15,14 +15,15 @@ from backend.database.db_manager import save_scraped_data_to_db
 class FullSiteScraper(BaseScraper):
     """Crawls entire cityofrochester.gov website and extracts all content."""
     
-    def __init__(self, max_pages: int = 200):
+    def __init__(self, max_pages: int = 200, seed_urls: List[str] = None):
         super().__init__(
             name="City of Rochester Full Site Crawler",
             base_url="https://www.cityofrochester.gov"
         )
         self.max_pages = max_pages
         self.visited_urls: Set[str] = set()
-        self.to_visit: List[str] = [self.base_url]
+        # --- NEW: Use seed URLs if provided ---
+        self.to_visit: List[str] = seed_urls if seed_urls else [self.base_url]
         self.all_content: List[Dict] = []
         
     def scrape(self) -> List[Dict]:
