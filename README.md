@@ -2,7 +2,7 @@
 
 > A production-grade, full-stack AI chatbot that serves as a one-stop information hub for Rochester, NY. Features real-time streaming responses, conversation memory, and multi-source data aggregation.
 
-🔗 **Live Demo:** (Coming soon after deployment)
+🔗 **Live Demo:** https://rocbot-production.up.railway.app/
 
 ---
 
