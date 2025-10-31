@@ -3,26 +3,50 @@ import sys, os, hashlib, ollama, time
 from typing import Dict, List, Generator
 from loguru import logger
 from backend.database.db_manager import DatabaseManager
+from backend.database.vector_db_manager import get_vector_db_manager
 from backend.database.models import ContentItem
 from groq import Groq
 
 class RAGHandler:
     def __init__(self, model: str = os.getenv('OLLAMA_MODEL', 'llama3.2:latest')):
+        """
+        Initialize RAG handler with semantic search.
+
+        Line-by-line explanation:
+        - Line 1: Set the LLM model to use (Ollama or Groq)
+        - Line 2: Initialize regular DB (still needed for stats/other operations)
+        - Line 3: Initialize vector DB for semantic search (NEW!)
+        - Line 4: Track conversation history per user
+        - Line 5-6: Set up Groq client if API key is available
+        """
         self.model = model
         self.db = DatabaseManager()
+        self.vector_db = get_vector_db_manager()  # NEW: Use semantic search instead of keyword
         self.conversations = {}
         self.groq_api_key = os.getenv("GROQ_API_KEY")
         self.groq_client = Groq(api_key=self.groq_api_key) if self.groq_api_key else None
         logger.info("Groq client initialized." if self.groq_client else "No GROQ_API_KEY, using local Ollama.")
+        logger.info("RAG Handler initialized with SEMANTIC SEARCH (ChromaDB + embeddings)")
 
     def ask_stream(self, question: str, conversation_id: str = "default") -> Generator:
+        """
+        Main method to handle user questions with streaming responses.
+
+        Line-by-line explanation of changes:
+        - Line 1: Get or create conversation history
+        - Line 2: Get last 6 messages for context
+        - Line 3: **CHANGED** Use semantic search instead of keyword search
+        """
         if conversation_id not in self.conversations:
             self.conversations[conversation_id] = []
 
         history = self.conversations.get(conversation_id, [])[-6:]
-        
-        # 1. Get relevant documents from the database
-        relevant_items = self.db.search_content(question, limit=3)
+
+        # 1. Get relevant documents from the database using SEMANTIC SEARCH
+        # OLD: relevant_items = self.db.search_content(question, limit=3)
+        # NEW: Use vector similarity instead of keyword matching
+        relevant_items = self.vector_db.semantic_search(question, limit=3)
+        logger.info(f"Semantic search found {len(relevant_items)} relevant items for: '{question}'")
 
         # 2. If we found relevant items, try to generate a RAG answer silently
         full_rag_answer = None

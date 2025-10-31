@@ -5,6 +5,7 @@ __pycache__/
 *.so
 .Python
 venv/
+venv_old_py38/
 env/
 ENV/
 .venv
@@ -17,6 +18,7 @@ ENV/
 *.sqlite3
 data/*.json
 data/chroma/
+chroma_db/
 
 # Logs
 logs/*.log
